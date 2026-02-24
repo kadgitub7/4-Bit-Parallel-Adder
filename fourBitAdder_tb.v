@@ -14,7 +14,7 @@ module fourBitAdder_tb();
                 A = k;
                 B = j;
                 Cin = 1'b0;
-                #10 $display("A = %b, B = %b, S = %b, Co = %b",A,B,{s3,s2,s1,s0},Co);
+                #10 $display("A = %b, B = %b, S = %b, Co = %b",A,B,{S3,S2,S1,S0},Co);
             end
         end
     end
