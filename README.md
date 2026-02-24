@@ -175,6 +175,7 @@ This section corresponds to the **block diagram** of the 4-bit parallel adder, s
 
 ![Waveform Diagram](imageAssets/fourBitAdderCircuit.png)
 
+This image was sourced from Neso Academy
 ---
 
 ## Waveform Diagram
