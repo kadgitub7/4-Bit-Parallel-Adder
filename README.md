@@ -28,12 +28,12 @@ A Verilog implementation of a **4-bit ripple-carry (parallel) adder built from 1
 A **4-bit parallel adder** (also called a 4-bit ripple-carry adder) is a combinational circuit that adds two 4-bit binary numbers and an optional input carry to produce a 4-bit sum and a carry-out. The inputs and outputs are:
 
 - **Inputs**
-  - \(A_3 A_2 A_1 A_0\) – first 4-bit operand.
-  - \(B_3 B_2 B_1 B_0\) – second 4-bit operand.
-  - \(C_i\) – input carry to the least significant bit (LSB) adder, often 0.
+  - A<sub>3</sub> A<sub>2</sub> A<sub>1</sub> A<sub>0</sub> – first 4-bit operand.
+  - B<sub>3</sub> B<sub>2</sub> B<sub>1</sub> B<sub>0</sub> – second 4-bit operand.
+  - C<sub>i</sub> – input carry to the least significant bit (LSB) adder, often 0.
 - **Outputs**
-  - \(S_3 S_2 S_1 S_0\) – sum bits representing \((A + B + C_i) \bmod 16\).
-  - \(C_o\) – final carry-out, which is 1 when the true sum exceeds 4 bits.
+  - S<sub>3</sub> S<sub>2</sub> S<sub>1</sub> S<sub>0</sub> – sum bits representing (A + B + C<sub>i</sub>) mod 16.
+  - C<sub>o</sub> – final carry-out, which is 1 when the true sum exceeds 4 bits.
 
 In this project, the 4-bit adder is implemented **structurally** by cascading **four 1-bit full adder modules**. This mirrors how multi-bit additions are performed by hand: we add bit-by-bit from LSB to MSB, propagating the carry into the next position.
 
@@ -41,19 +41,15 @@ In this project, the 4-bit adder is implemented **structurally** by cascading **
 
 ## Full Adder Refresher
 
-A **1-bit full adder** adds three single-bit inputs and produces a **sum** \(S\) and a **carry-out** \(C_o\).
+A **1-bit full adder** adds three single-bit inputs and produces a **sum** S and a **carry-out** C<sub>o</sub>.
 
-- **Inputs:** \(A\), \(B\), \(C_i\)
-- **Outputs:** \(S\), \(C_o\)
+- **Inputs:** A, B, C<sub>i</sub>
+- **Outputs:** S, C<sub>o</sub>
 
 The standard Boolean equations for a full adder are:
 
-\[
-S = A \oplus B \oplus C_i
-\]
-\[
-C_o = AB + AC_i + BC_i
-\]
+- S = A ⊕ B ⊕ C<sub>i</sub>
+- C<sub>o</sub> = A·B + A·C<sub>i</sub> + B·C<sub>i</sub>
 
 In this project, the module `fullAdder` realizes these equations and is then reused as the building block of the 4-bit parallel adder.
 
@@ -76,9 +72,9 @@ Useful online resources for full adders, ripple-carry adders, and digital design
 
 ### Full Adder Truth Table
 
-The 1-bit full adder has three inputs \(A\), \(B\), \(C_i\) and two outputs \(S\), \(C_o\). Its truth table is:
+The 1-bit full adder has three inputs A, B, C<sub>i</sub> and two outputs S, C<sub>o</sub>. Its truth table is:
 
-| **A** | **B** | **C\_i** | **‖** | **S** | **C\_o** |
+| **A** | **B** | **C<sub>i</sub>** | **‖** | **S** | **C<sub>o</sub>** |
 |:-----:|:-----:|:--------:|:-----:|:-----:|:--------:|
 | **———** | **———** | **———** | **———** | **———** | **———** |
 | 0 | 0 | 0 | **\|** | 0 | 0 |
@@ -96,13 +92,11 @@ This is the **final truth table** of the 1-bit full adder. It remains unchanged 
 
 The 4-bit parallel adder adds:
 
-\[
-(A_3 A_2 A_1 A_0)_2 + (B_3 B_2 B_1 B_0)_2 + C_i \rightarrow (C_o\, S_3 S_2 S_1 S_0)_2
-\]
+(A<sub>3</sub> A<sub>2</sub> A<sub>1</sub> A<sub>0</sub>)₂ + (B<sub>3</sub> B<sub>2</sub> B<sub>1</sub> B<sub>0</sub>)₂ + C<sub>i</sub> → (C<sub>o</sub> S<sub>3</sub> S<sub>2</sub> S<sub>1</sub> S<sub>0</sub>)₂
 
-There are \(2^4 \times 2^4 = 256\) possible \((A, B)\) input combinations (and 512 if we also vary \(C_i\)). Listing all of them results in a very long table, so only a representative subset is shown here:
+There are 2⁴ × 2⁴ = 256 possible (A, B) input combinations (and 512 if we also vary C<sub>i</sub>). Listing all of them results in a very long table, so only a representative subset is shown here:
 
-| **A**   | **B**   | **S**   | **C\_o** |
+| **A**   | **B**   | **S**   | **C<sub>o</sub>** |
 |:-------:|:-------:|:-------:|:--------:|
 | 0000 | 0000 | 0000 | 0 |
 | 0000 | 0001 | 0001 | 0 |
@@ -113,7 +107,7 @@ There are \(2^4 \times 2^4 = 256\) possible \((A, B)\) input combinations (and 5
 | 1111 | 0001 | 0000 | 1 |
 | 1111 | 1111 | 1110 | 1 |
 
-The rule is straightforward: \(S\) is the lower 4 bits of the binary sum, and \(C_o\) is the overflow bit when the exact sum is \(\ge 16\). The **Simulation Output** section later includes the complete enumerated results used in the testbench.
+The rule is straightforward: S is the lower 4 bits of the binary sum, and C<sub>o</sub> is the overflow bit when the exact sum is ≥ 16. The **Simulation Output** section later includes the complete enumerated results used in the testbench.
 
 ---
 
@@ -121,42 +115,34 @@ The rule is straightforward: \(S\) is the lower 4 bits of the binary sum, and \(
 
 ### Full Adder K-Maps
 
-For the full adder, we use \(A\) as the row variable and \(BC_i\) as the column variables in Gray code order \(00, 01, 11, 10\).
+For the full adder, we use A as the row variable and B C<sub>i</sub> as the column variables in Gray code order 00, 01, 11, 10.
 
-**Sum \(S\):**
+**Sum S:**
 
-| **A \\ B C\_i** | **00** | **01** | **11** | **10** |
+| **A \\ B C<sub>i</sub>** | **00** | **01** | **11** | **10** |
 |:---------------:|:------:|:------:|:------:|:------:|
 | **0** | 0 | 1 | 0 | 1 |
 | **1** | 1 | 0 | 1 | 0 |
 
-From the K-map, \(S\) is 1 whenever an **odd number** of \(A\), \(B\), \(C_i\) are 1. Grouping and simplifying yields:
+From the K-map, S is 1 whenever an **odd number** of A, B, C<sub>i</sub> are 1. Grouping and simplifying yields:
 
-\[
-S = AB'C_i' + A'B'C_i + ABC_i + A'BC_i'
-\]
-\[
-S = A(B \odot C_i) + A'(B \oplus C_i)
-\]
+- S = A·B′·C<sub>i</sub>′ + A′·B′·C<sub>i</sub> + A·B·C<sub>i</sub> + A′·B·C<sub>i</sub>′
+- S = A·(B ⊙ C<sub>i</sub>) + A′·(B ⊕ C<sub>i</sub>)
 
-Let \(X = B \oplus C_i\) (so \(X' = B \odot C_i\)). Then:
+Let X = B ⊕ C<sub>i</sub> (so X′ = B ⊙ C<sub>i</sub>). Then:
 
-\[
-S = AX' + A'X = A \oplus X = A \oplus B \oplus C_i
-\]
+- S = A·X′ + A′·X = A ⊕ X = A ⊕ B ⊕ C<sub>i</sub>
 
-**Carry-out \(C_o\):**
+**Carry-out C<sub>o</sub>:**
 
-| **A \\ B C\_i** | **00** | **01** | **11** | **10** |
+| **A \\ B C<sub>i</sub>** | **00** | **01** | **11** | **10** |
 |:---------------:|:------:|:------:|:------:|:------:|
 | **0** | 0 | 0 | 1 | 0 |
 | **1** | 0 | 1 | 1 | 1 |
 
 Grouping the 1s in pairs gives:
 
-\[
-C_o = AC_i + BC_i + AB
-\]
+- C<sub>o</sub> = A·C<sub>i</sub> + B·C<sub>i</sub> + A·B
 
 These minimized equations are exactly what the `fullAdder` module implements, and they are reused four times in the 4-bit parallel adder.
 
@@ -167,17 +153,17 @@ These minimized equations are exactly what the `fullAdder` module implements, an
 To build the 4-bit parallel adder, we **cascade four 1-bit full adders** so that the carry-out of each stage becomes the carry-in of the next stage:
 
 1. **Least Significant Bit (LSB) Stage**
-   - Inputs: \(A_0\), \(B_0\), global \(C_i\) (often 0).
-   - Outputs: \(S_0\), intermediate carry \(C_1\).
+   - Inputs: A<sub>0</sub>, B<sub>0</sub>, global C<sub>i</sub> (often 0).
+   - Outputs: S<sub>0</sub>, intermediate carry C<sub>1</sub>.
 2. **Bit 1 Stage**
-   - Inputs: \(A_1\), \(B_1\), carry \(C_1\).
-   - Outputs: \(S_1\), intermediate carry \(C_2\).
+   - Inputs: A<sub>1</sub>, B<sub>1</sub>, carry C<sub>1</sub>.
+   - Outputs: S<sub>1</sub>, intermediate carry C<sub>2</sub>.
 3. **Bit 2 Stage**
-   - Inputs: \(A_2\), \(B_2\), carry \(C_2\).
-   - Outputs: \(S_2\), intermediate carry \(C_3\).
+   - Inputs: A<sub>2</sub>, B<sub>2</sub>, carry C<sub>2</sub>.
+   - Outputs: S<sub>2</sub>, intermediate carry C<sub>3</sub>.
 4. **Most Significant Bit (MSB) Stage**
-   - Inputs: \(A_3\), \(B_3\), carry \(C_3\).
-   - Outputs: \(S_3\), final carry-out \(C_o\).
+   - Inputs: A<sub>3</sub>, B<sub>3</sub>, carry C<sub>3</sub>.
+   - Outputs: S<sub>3</sub>, final carry-out C<sub>o</sub>.
 
 In Verilog, this is realized in the `fourBitAdder` module, which instantiates the `fullAdder` module four times and connects the internal carry wires between them. The carry “ripples” from the LSB to the MSB, hence the name **ripple-carry adder**.
 
@@ -193,13 +179,13 @@ This section corresponds to the **block diagram** of the 4-bit parallel adder, s
 
 ## Waveform Diagram
 
-The behavioral simulation waveform shows inputs \(A\), \(B\) (and optionally \(C_i\)) cycling through all combinations, while outputs \(S\) and \(C_o\) follow the expected 4-bit addition results.
+The behavioral simulation waveform shows inputs A, B (and optionally C<sub>i</sub>) cycling through all combinations, while outputs S and C<sub>o</sub> follow the expected 4-bit addition results.
 
 > **Image placeholder:** This is where you should insert the **waveform diagram image for the 4-bit parallel adder simulation** (e.g., Vivado simulation waveforms for \(A\), \(B\), \(S\), and \(C_o\)).
 
 Key checks when inspecting the waveform:
 
-- For each input combination, verify that the binary value of \(S\) and \(C_o\) matches the theoretical sum \(A + B + C_i\).
+- For each input combination, verify that the binary value of S and C<sub>o</sub> matches the theoretical sum A + B + C<sub>i</sub>.
 - Confirm that the internal carries propagate correctly from the LSB to the MSB stage.
 
 ---
@@ -518,8 +504,8 @@ Follow these steps to open the project in **Vivado** and run the simulation.
    - Compile the design and testbench.
    - Open the **Simulation** view with the waveform.
 3. Inspect the waveform:
-   - Confirm that \(A\) and \(B\) cycle through all combinations.
-   - Verify that \(S\) and \(C_o\) match the 4-bit addition rule: \(C_o \cdot 2^4 + S = A + B + C_i\).
+   - Confirm that A and B cycle through all combinations.
+   - Verify that S and C<sub>o</sub> match the 4-bit addition rule: C<sub>o</sub>·2⁴ + S = A + B + C<sub>i</sub>.
 
 ### 5. (Optional) Re-run or Modify the Design
 
@@ -536,15 +522,15 @@ If you want to map the design to a physical FPGA:
 1. In **Sources**, right‑click the top-level RTL module (e.g., `fourBitAdder.v`) → **Set as Top** (for synthesis/implementation).
 2. Run **Synthesis** from the Flow Navigator.
 3. Run **Implementation**.
-4. Create or edit a constraints file (e.g. `.xdc`) to assign pins for \(A_3..A_0\), \(B_3..B_0\), \(S_3..S_0\), and \(C_o\) (and \(C_i\) if used).
+4. Create or edit a constraints file (e.g. `.xdc`) to assign pins for A<sub>3</sub>..A<sub>0</sub>, B<sub>3</sub>..B<sub>0</sub>, S<sub>3</sub>..S<sub>0</sub>, and C<sub>o</sub> (and C<sub>i</sub> if used).
 5. Run **Generate Bitstream** to produce the configuration file for your FPGA board.
 
 ---
 
 ## Project Files
 
-- `fullAdder.v` — RTL for the 1-bit full adder \((A, B, C_i) \rightarrow (S, C_o)\).
-- `fourBitAdder.v` — RTL for the 4-bit parallel adder constructed from four full adders \((A[3:0], B[3:0], C_i) \rightarrow (S[3:0], C_o)\).
+- `fullAdder.v` — RTL for the 1-bit full adder (A, B, C<sub>i</sub>) → (S, C<sub>o</sub>).
+- `fourBitAdder.v` — RTL for the 4-bit parallel adder constructed from four full adders (A[3:0], B[3:0], C<sub>i</sub>) → (S[3:0], C<sub>o</sub>).
 - `fourBitAdder_tb.v` — Testbench for the 4-bit parallel adder; applies all input combinations and prints/observes the outputs.
 
 *Author: **Kadhir Ponnambalam***
