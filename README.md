@@ -173,7 +173,7 @@ In Verilog, this is realized in the `fourBitAdder` module, which instantiates th
 
 This section corresponds to the **block diagram** of the 4-bit parallel adder, showing four full adders connected in series with carries rippling from LSB to MSB.
 
-> **Image placeholder:** This is where you should insert the **circuit diagram image for the 4-bit parallel adder** (e.g., a block diagram with four full-adder blocks and internal carry connections).
+![Waveform Diagram](imageAssets/fourBitAdderCircuit.png)
 
 ---
 
