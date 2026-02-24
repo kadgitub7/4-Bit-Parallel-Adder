@@ -2,7 +2,7 @@
 
 module fourBitAdder_tb();
 
-    reg A,B,Cin;
+    reg[3:0] A,B,Cin;
     wire S0,S1,S2,S3,Co;
     wire c0,c1,c2;
     
