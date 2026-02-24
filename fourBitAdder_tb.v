@@ -2,7 +2,8 @@
 
 module fourBitAdder_tb();
 
-    reg[3:0] A,B,Cin;
+    reg[3:0] A,B;
+    reg Cin;
     wire S0,S1,S2,S3,Co;
     wire c0,c1,c2;
     
@@ -17,5 +18,6 @@ module fourBitAdder_tb();
                 #10 $display("A = %b, B = %b, S = %b, Co = %b",A,B,{S3,S2,S1,S0},Co);
             end
         end
+        $finish;
     end
 endmodule
