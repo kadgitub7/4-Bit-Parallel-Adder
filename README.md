@@ -181,12 +181,7 @@ This section corresponds to the **block diagram** of the 4-bit parallel adder, s
 
 The behavioral simulation waveform shows inputs A, B (and optionally C<sub>i</sub>) cycling through all combinations, while outputs S and C<sub>o</sub> follow the expected 4-bit addition results.
 
-> **Image placeholder:** This is where you should insert the **waveform diagram image for the 4-bit parallel adder simulation** (e.g., Vivado simulation waveforms for \(A\), \(B\), \(S\), and \(C_o\)).
-
-Key checks when inspecting the waveform:
-
-- For each input combination, verify that the binary value of S and C<sub>o</sub> matches the theoretical sum A + B + C<sub>i</sub>.
-- Confirm that the internal carries propagate correctly from the LSB to the MSB stage.
+![Waveform Diagram](imageAssets/fourBitAdderWaveform.png)
 
 ---
 
