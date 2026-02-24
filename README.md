@@ -181,7 +181,7 @@ This section corresponds to the **block diagram** of the 4-bit parallel adder, s
 
 The behavioral simulation waveform shows inputs A, B (and optionally C<sub>i</sub>) cycling through all combinations, while outputs S and C<sub>o</sub> follow the expected 4-bit addition results.
 
-![Waveform Diagram](imageAssets/fourBitParallelAdderWaveform.png)
+![Waveform Diagram](imageAssets/fourBitAdderWaveform.png)
 
 ---
 
